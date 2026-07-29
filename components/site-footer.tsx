@@ -49,16 +49,16 @@ export function SiteFooter() {
               <InstagramIcon className="h-5 w-5" />
             </a>
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/profile.php?id=100093686346606"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
               className="text-muted-foreground transition-colors hover:text-primary"
             >
-              <FacebookIcon className="h-5 w-5" />
+              <FacebookIcon className="h-5 w-5 object-contain" />
             </a>
             <a
-              href="mailto:hello@misueno.com"
+              href="mailto:misuenophoto@gmail.com"
               aria-label="Email"
               className="text-muted-foreground transition-colors hover:text-primary"
             >
