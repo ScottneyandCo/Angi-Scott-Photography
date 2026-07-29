@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import { Mail, Phone, MapPin } from 'lucide-react'
-import { InstagramIcon } from '@/components/social-icons'
+import { Mail, MapPin } from 'lucide-react'
 import { ContactForm } from '@/components/contact-form'
 import { getContent } from '@/lib/data'
 
@@ -16,20 +15,10 @@ export default async function ContactPage() {
   const content = await getContent()
 
   const email = content['contact.email']
-  const phone = content['contact.phone']
-  const igHandle = content['contact.instagram']
-  const igUrl = `https://instagram.com/${igHandle.replace(/^@/, '')}`
 
   const details = [
     { icon: Mail, label: 'Email', value: email, href: `mailto:${email}` },
-    {
-      icon: Phone,
-      label: 'Phone',
-      value: phone,
-      href: `tel:${phone.replace(/[^0-9+]/g, '')}`,
-    },
     { icon: MapPin, label: 'Based in', value: content['contact.location'] },
-    { icon: InstagramIcon, label: 'Instagram', value: igHandle, href: igUrl },
   ]
 
   return (

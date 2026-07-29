@@ -5,10 +5,8 @@
 export const CONTENT_DEFAULTS: Record<string, string> = {
   // Brand / contact
   'brand.tagline': 'Lifestyle & Portrait Photography',
-  'contact.email': 'hello@misueno.com',
-  'contact.phone': '(555) 123-4567',
-  'contact.location': 'Available for travel worldwide',
-  'contact.instagram': '@misueno.photography',
+  'contact.email': 'misuenophoto@gmail.com',
+  'contact.location': 'Based in Bryan, Ohio',
 
   // Home
   'home.hero.eyebrow': 'Lifestyle & Portrait Photography',
