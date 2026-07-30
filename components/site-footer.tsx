@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Mail } from 'lucide-react'
+import { Mail, Lock } from 'lucide-react'
 import { InstagramIcon, FacebookIcon } from '@/components/social-icons'
 
 const navLinks = [
@@ -67,15 +67,16 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center gap-3 border-t border-border/40 pt-8 text-center">
+        <div className="mt-12 flex flex-col items-center gap-4 border-t border-border/40 pt-8 text-center">
           <p className="text-xs tracking-[0.15em] text-muted-foreground">
             &copy; {new Date().getFullYear()} Mi Sueño by Angi Scott. All rights reserved.
           </p>
           <Link
             href="/admin"
-            className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/60 transition-colors hover:text-primary"
+            className="inline-flex items-center gap-2 border border-border px-5 py-2.5 text-xs uppercase tracking-[0.25em] text-foreground transition-colors hover:border-primary hover:text-primary"
           >
-            Studio Login
+            <Lock className="h-3.5 w-3.5" aria-hidden="true" />
+            Admin Login
           </Link>
         </div>
       </div>
