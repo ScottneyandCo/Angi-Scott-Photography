@@ -20,7 +20,7 @@ export default async function HomePage() {
           alt="Lifestyle photography by Angi Scott"
           fill
           priority
-          className="object-cover"
+          className="object-cover object-[center_20%]"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/40 to-background" />
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
