@@ -4,12 +4,12 @@
 
 export const CONTENT_DEFAULTS: Record<string, string> = {
   // Brand / contact
-  'brand.tagline': 'Lifestyle & Portrait Photography',
+  'brand.tagline': 'Artistic & Portrait Photography',
   'contact.email': 'misuenophoto@gmail.com',
   'contact.location': 'Based in Bryan, Ohio',
 
   // Home
-  'home.hero.eyebrow': 'Lifestyle & Portrait Photography',
+  'home.hero.eyebrow': 'Artistic & Portrait Photography',
   'home.hero.title': 'Capturing your dream, one frame at a time',
   'home.hero.subtitle':
     "Mi Sueño by Angi Scott is a celebration of life's quiet, beautiful moments — told with a refined, cinematic eye.",
