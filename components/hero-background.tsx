@@ -63,10 +63,20 @@ void main() {
   vec2 cuv = coverUv(vUv);
   vec4 base = texture2D(uTex, cuv);
 
-  // Isolate the red fabric: strong red channel, weak green/blue, decent brightness.
-  float lum = dot(base.rgb, vec3(0.299, 0.587, 0.114));
-  float redness = base.r - 0.5 * (base.g + base.b);
-  float mask = smoothstep(0.16, 0.42, redness) * smoothstep(0.08, 0.22, lum);
+  // Isolate ONLY the saturated red dress. Skin is also reddish, so the red
+  // channel must dominate BOTH other channels strongly, green must be low
+  // (skin has high green, red cloth does not), and the pixel must be vivid.
+  float maxC = max(base.r, max(base.g, base.b));
+  float minC = min(base.r, min(base.g, base.b));
+  float sat = (maxC - minC) / max(maxC, 0.001);      // HSV saturation
+  float redDom = base.r - max(base.g, base.b);        // how much red leads
+  float lowGreen = 1.0 - smoothstep(0.30, 0.55, base.g); // reject skin (high green)
+
+  float mask =
+      smoothstep(0.22, 0.42, redDom) *   // red must clearly lead
+      smoothstep(0.45, 0.70, sat) *      // must be vivid, not a muted skin tone
+      smoothstep(0.20, 0.35, base.r) *   // must actually be bright red
+      lowGreen;
 
   // "Freedom" grows away from the waist/body anchor so free-hanging cloth moves
   // more than fabric held close to the dancer.
