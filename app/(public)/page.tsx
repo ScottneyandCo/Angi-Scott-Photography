@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { getFeaturedDisplay, getContent } from '@/lib/data'
+import { HeroBackground } from '@/components/hero-background'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,13 +16,7 @@ export default async function HomePage() {
     <>
       {/* Hero */}
       <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-        <Image
-          src="/gallery/hero.png"
-          alt="Lifestyle photography by Angi Scott"
-          fill
-          priority
-          className="object-cover object-[center_20%]"
-        />
+        <HeroBackground />
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/40 to-background" />
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
           <p className="mb-6 text-xs uppercase tracking-[0.5em] text-primary">
