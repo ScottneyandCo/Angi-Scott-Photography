@@ -44,7 +44,9 @@ export function GalleryGrid({ photos }: { photos: DisplayPhoto[] }) {
 
       {/* Masonry-style columns */}
       <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
-        {filtered.map((photo, i) => (
+        {filtered.map((photo, i) => {
+          const isFlowing = photo.src.includes('event-dancer-red')
+          return (
           <button
             key={`${photo.src}-${i}`}
             type="button"
@@ -56,7 +58,12 @@ export function GalleryGrid({ photos }: { photos: DisplayPhoto[] }) {
               alt={photo.alt}
               width={800}
               height={1000}
-              className="w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className={cn(
+                'w-full object-cover',
+                isFlowing
+                  ? 'animate-flow'
+                  : 'transition-transform duration-700 group-hover:scale-105',
+              )}
             />
             <div className="absolute inset-0 flex items-end bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100">
               <span className="p-5 text-xs uppercase tracking-[0.25em] text-primary">
@@ -64,7 +71,8 @@ export function GalleryGrid({ photos }: { photos: DisplayPhoto[] }) {
               </span>
             </div>
           </button>
-        ))}
+          )
+        })}
       </div>
 
       {/* Lightbox */}

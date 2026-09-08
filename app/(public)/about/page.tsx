@@ -55,10 +55,14 @@ export default async function AboutPage() {
             <h1 className="text-balance font-serif text-4xl font-light leading-tight text-foreground sm:text-5xl md:text-6xl">
               {content['about.title']}
             </h1>
-            <div className="mt-8 space-y-5 leading-relaxed text-muted-foreground">
-              <p>{content['about.p1']}</p>
-              <p>{content['about.p2']}</p>
-              <p>{content['about.p3']}</p>
+            <div className="mt-8 flex flex-col gap-5 leading-relaxed text-muted-foreground">
+              <p>{content['about.story.p1']}</p>
+              <p>{content['about.story.p2']}</p>
+              <p>{content['about.story.p3']}</p>
+              <p>{content['about.story.p4']}</p>
+              <p>{content['about.story.p5']}</p>
+              <p>{content['about.story.p6']}</p>
+              <p>{content['about.story.p7']}</p>
             </div>
             <Link
               href="/contact"
