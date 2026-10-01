@@ -4,7 +4,6 @@ import { db } from '@/lib/db'
 import { inquiries } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
-import { Resend } from 'resend'
 
 export type ContactResult = { ok: boolean; error?: string }
 
@@ -51,46 +50,46 @@ export async function submitInquiry(formData: FormData): Promise<ContactResult> 
     return { ok: false, error: 'Something went wrong. Please try again.' }
   }
 
-  // 2) Try to email a notification. Dormant until RESEND_API_KEY is set —
-  // a missing key never blocks the submission (it's already saved above).
-  const apiKey = process.env.RESEND_API_KEY
+  // 2) Send a notification through Web3Forms. The inquiry remains safely
+  // stored even if email delivery is unavailable or the provider rejects it.
+  const accessKey = process.env.WEB3FORMS_ACCESS_KEY
   const to = process.env.CONTACT_NOTIFICATION_EMAIL
-  if (apiKey && to) {
+  if (accessKey && to) {
     try {
-      const resend = new Resend(apiKey)
-      const dateLine = preferredDate
-        ? `<p><strong>Preferred date:</strong> ${escapeHtml(preferredDate)}</p>`
-        : ''
-      const typeLine = sessionType
-        ? `<p><strong>Session type:</strong> ${escapeHtml(sessionType)}</p>`
-        : ''
-      await resend.emails.send({
-        // Resend's shared sender works with no domain setup. Swap for a
-        // verified domain address later for best deliverability.
-        from: 'Mi Sueno Inquiries <onboarding@resend.dev>',
-        to,
-        replyTo: email,
-        subject: `New inquiry from ${name}`,
-        html: `
-          <div style="font-family: Arial, sans-serif; color: #1a1a1a;">
-            <h2 style="font-weight: 400;">New website inquiry</h2>
-            <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-            <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-            ${typeLine}
-            ${dateLine}
-            <p><strong>Message:</strong></p>
-            <p style="white-space: pre-wrap;">${escapeHtml(message)}</p>
-          </div>
-        `,
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: accessKey,
+          subject: `New inquiry from ${name}`,
+          from_name: 'Mi Sueno Photography website',
+          email: to,
+          replyto: email,
+          name,
+          session_type: sessionType || 'Not specified',
+          preferred_date: preferredDate || 'Not specified',
+          message,
+        }),
       })
+
+      if (!response.ok) {
+        throw new Error(`Web3Forms returned ${response.status}`)
+      }
+
+      const result = (await response.json()) as { success?: boolean }
+      if (!result.success) {
+        throw new Error('Web3Forms rejected the submission')
+      }
+
       await db
         .update(inquiries)
         .set({ emailed: true })
         .where(eq(inquiries.id, inquiryId))
     } catch (err) {
-      // Email failed, but the inquiry is safely stored in the dashboard.
-      console.error('[v0] Failed to send inquiry email:', err)
+      console.error('[v0] Failed to send inquiry email through Web3Forms:', err)
     }
+  } else {
+    console.warn('[v0] Web3Forms is not configured; inquiry saved without email notification')
   }
 
   revalidatePath('/admin')
