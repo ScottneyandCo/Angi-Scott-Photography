@@ -22,6 +22,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Mi Sueño by Angi Scott | Lifestyle Photography',
+  verification: {
+    google: 'tz8dPF9ImSe6BjXCEwGZx8bHHPfMvrs_2MooND5IFZs',
+  },
   description:
     'Elegant lifestyle and portrait photography by Angi Scott. Capturing timeless moments with a refined, cinematic eye.',
   generator: 'v0.app',
